@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define INF 2147483647
+#define INFF 9223372036854775807
+#define ll long long
+#define REP(i,n) for(ll i=0;i<n;i++)
+#define REPP(i,m,n) for(ll i=m;i<n;i++)
+#define ALL(N) (N.begin(),N.end())
+#define de cout << "debug" << endl;
+#define pb push_back
+template<class T> inline bool chmax(T& a, T b) { if (a < b) { a = b; return 1; } return 0; }
+template<class T> inline bool chmin(T& a, T b) { if (a > b) { a = b; return 1; } return 0; }
+
+
+
+int main() {
+    cin.tie(0);    
+	ios::sync_with_stdio(false);
+    ll A,B,C,D;
+    cin >> A >> B >> C >> D;
+    ll E = C,F = D;
+    ll cnt = 0;
+    vector<ll> V;
+    if(C < D) swap(C,D);
+    ll r = C % D;
+    ll x = C*D;
+    while(r!=0){
+        C = D;
+        D = r;
+        r = C % D;
+    }
+    ll gcd = x/D;
+  //cout << gcd << endl;
+      ll ans = B/E - A/E;
+    ans += B/F - A/F;
+    ans -= B/gcd - A/gcd;
+  if(A % gcd != 0 && A % E != 0 && A% F != 0){
+    //if(B % gcd != 0 && B% E != 0 && B% F != 0){
+     // cout <<(B-A)-ans+2 << endl;
+      //return 0;
+   // }
+    cout <<(B-A)-ans+1 << endl;
+    return 0;
+  }
+    cout << (B-A)-ans << endl;
+}
