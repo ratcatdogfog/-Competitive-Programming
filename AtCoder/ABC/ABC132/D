@@ -1,0 +1,55 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define INF 2147483647
+#define INFF 9223372036854775807
+#define ll long long
+#define REP(i,n) for(ll i=0;i<n;i++)
+#define REPP(i,m,n) for(ll i=m;i<n;i++)
+#define ALL(N) (N.begin(),N.end())
+#define de cout << "debug" << endl;
+#define pb push_back
+template<class T> inline bool chmax(T& a, T b) { if (a < b) { a = b; return 1; } return 0; }
+template<class T> inline bool chmin(T& a, T b) { if (a > b) { a = b; return 1; } return 0; }
+
+ll N,K;
+
+const ll MAX = 510000;
+const ll MOD = 1000000007;
+
+long long fac[MAX], finv[MAX], inv[MAX];
+
+// テーブルを作る前処理
+void COMinit() {
+    fac[0] = fac[1] = 1;
+    finv[0] = finv[1] = 1;
+    inv[1] = 1;
+    for (ll i = 2; i < MAX; i++){
+        fac[i] = fac[i - 1] * i % MOD;
+        inv[i] = MOD - inv[MOD%i] * (MOD / i) % MOD;
+        finv[i] = finv[i - 1] * inv[i] % MOD;
+    }
+}
+
+// 二項係数計算
+long long COM(ll n, ll k){
+    if (n < k) return 0;
+    if (n < 0 || k < 0) return 0;
+    return fac[n] * (finv[k] * finv[n - k] % MOD) % MOD;
+}
+
+
+int main() {
+    cin.tie(0);    
+	ios::sync_with_stdio(false);
+    COMinit();
+    cin >> N >> K;
+    ll ao = K;
+    ll aka = N-K;
+    cout << N-K+1 << endl;
+    REPP(i,2,K+1){
+        ll ans;
+      ll ka = 1+N-K;
+        ans = (COM(K-1,i-1) * COM(ka,N-K-i+1))%MOD;
+        cout << ans << endl;
+    }
+}
