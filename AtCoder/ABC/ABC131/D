@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define INF 2147483647
+#define INFF 9223372036854775807
+#define ll long long
+#define REP(i,n) for(int i=0;i<n;i++)
+#define REPP(i,m,n) for(int i=m;i<n;i++)
+#define ALL(N) (N.begin(),N.end())
+#define de cout << "debug" << endl;
+#define pb push_back
+template<class T> inline bool chmax(T& a, T b) { if (a < b) { a = b; return 1; } return 0; }
+template<class T> inline bool chmin(T& a, T b) { if (a > b) { a = b; return 1; } return 0; }
+
+
+int main() {
+    cin.tie(0);    
+	ios::sync_with_stdio(false);
+    int N;
+    cin >> N;
+    vector<pair<int,int>> V;
+    int A[200100],B[200100];
+    REP(i,N){
+        cin >> A[i] >> B[i];
+        V.pb({B[i],A[i]});
+    }
+    sort ALL(V);
+    ll cnt = 0;
+    REP(i,N){
+        cnt += V[i].second;
+        if(cnt > V[i].first){
+            cout << "No" << endl;
+            return 0;
+        }
+    }
+    cout << "Yes" << endl;
+}
