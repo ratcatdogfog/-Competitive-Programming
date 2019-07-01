@@ -1,2 +1,2 @@
-# -Competitive-Programming
+# Competitive-Programming
 競技プログラミングの諸々はここへ
