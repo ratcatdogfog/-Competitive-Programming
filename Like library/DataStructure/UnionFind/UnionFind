@@ -1,0 +1,60 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct UnionFind{
+    vector<int> par,r;
+
+    //はじめに全てが根であるとしておく
+    UnionFind(int N):par(N),r(N,1){iota(par.begin(),par.end(),0);}
+
+    int root(int x){//根に当たるまで再帰で探す
+        if(par[x] == x) return x;
+        else return par[x] = root(par[x]);
+    }
+
+    bool same(int x,int y){//つながっているかどうか判定
+        return par[x] == par[y];
+    }
+
+    int size(int x){ //根の大きさを判定する
+        return r[root(x)];
+    }
+
+    void unite(int x, int y){//根が同じでなかったらつなげる
+        x = root(x), y = root(y);
+        if(x == y) return;
+        if(r[x] < r[y]) swap(x,y); //値を小さいほうを根にする
+        r[x] += r[y];
+        par[y] = x;
+        return;
+    }
+};
+
+void ATC001(){
+    cin.tie(0);
+	ios::sync_with_stdio(false);
+
+    int N,Q,P,A,B;
+    cin >> N >> Q;
+    UnionFind UF(N);
+    for(int i = 0;i < Q;++i){
+        cin >> P >> A >> B;
+        if(P == 0){
+            UF.unite(A,B);
+        }
+        else if(P == 1){
+            UF.root(A),UF.root(B);
+            if(UF.same(A,B))cout << "Yes" << endl;
+            else cout << "No" << endl;
+        }
+    }
+}
+
+/*
+  verified : https://atcoder.jp/contests/atc001/tasks/unionfind_a
+*/
+
+int main() {
+    ATC001();
+    return 0;
+}
