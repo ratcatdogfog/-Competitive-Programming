@@ -1,0 +1,80 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct PotentializedUnionFind{
+    vector<int> par,rank,diff_weight;
+
+    PotentializedUnionFind(int N):par(N),rank(N,0),diff_weight(N,0){iota(par.begin(),par.end(),0);}
+
+    int root(int x){
+        if(par[x] == x) return x;
+        else{
+            int r = root(par[x]);
+            diff_weight[x] += diff_weight[par[x]];
+            return par[x] = root(par[x]);
+        }
+    }
+
+    bool unite(int x, int y,int w){
+        w += weight(x); w -= weight(y);
+        x = root(x); y = root(y);
+        if(x == y) return false;
+        if(rank[x] < rank[y]){
+            diff_weight[x] -= w;
+            par[x] = y;
+        }
+        else{
+            diff_weight[y] += w;
+            par[y] = x;
+            if(rank[x] == rank[y]) ++rank[x];
+        }
+        return true;
+    }
+
+    bool same(int x,int y){
+        return root(x) == root(y);
+    }
+
+    int weight(int x){
+        root(x);
+        return diff_weight[x];
+    }
+
+    int diff(int x,int y){
+        return weight(y) - weight(x);
+    }
+};
+
+
+void ABC087(){
+    cin.tie(0);
+	ios::sync_with_stdio(false);
+
+    int N,M,L,R,D;
+    cin >> N >> M;
+    PotentializedUnionFind PUF(N);
+    for(int i = 0;i < M;++i){
+        cin >> L >> R >> D;
+        --L,--R;
+        if(PUF.same(L,R)){
+            int diff = PUF.diff(L,R);
+            if(diff != D){
+                cout << "No" << endl;
+                return;
+            }
+        }
+        else{
+            PUF.unite(L,R,D);
+        }
+    }
+    cout << "Yes" << endl;
+}
+
+/*
+  verified : https://atcoder.jp/contests/abc087/tasks/arc090_b
+*/
+
+int main() {
+    ABC087();
+    return 0;
+}
