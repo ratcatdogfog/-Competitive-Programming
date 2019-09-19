@@ -23,7 +23,7 @@ struct UnionFind{
     void unite(int x, int y){//根が同じでなかったらつなげる
         x = root(x), y = root(y);
         if(x == y) return;
-        if(r[x] < r[y]) swap(x,y); //値を小さいほうを根にする
+        if(r[x] < r[y]) swap(x,y); //値の小さいほうを根にする
         r[x] += r[y];
         par[y] = x;
         return;
