@@ -1,0 +1,137 @@
+/*
+  verified : https://atcoder.jp/contests/chokudai004
+  submission : https://atcoder.jp/contests/chokudai004/submissions/7366296
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+#define REP(i,n) for(int i=0;i<n;++i)
+#define REPP(i,m,n) for(int i=m;i<n;++i)
+#define INF 2147483647
+#define de cout << "line : " << __LINE__ << " debug" << endl;
+
+const int N = 30;
+vector<int> B(3);
+random_device x;
+mt19937 mt(x());
+
+int calc(vector<vector<int>> &ans){
+    int now = 0;
+  	int point1;
+    REP(i,N){
+        REP(j,N){
+            point1 = 0;
+            REPP(k,i,N){
+                point1 += ans[j][k];
+                if(point1 == B[0]) now += B[0];
+                if(point1 == B[1]) now += B[1];
+                if(point1 == B[2]) now += B[2];
+                if(point1 > B[2]) break;
+            }
+        }
+    }
+    REP(i,N){
+        REP(j,N){
+            point1 = 0;
+            REPP(k,i,N){
+                point1 += ans[k][j];
+                if(point1 == B[0]) now += B[0];
+                if(point1 == B[1]) now += B[1];
+                if(point1 == B[2]) now += B[2];
+                if(point1 > B[2]) break;
+            }
+        }
+    }
+
+    return now;
+}
+
+int ran(const int &mod){
+    return mt() % mod;
+}
+
+int portcalc(int &x,int &y,vector<vector<int>> &v){
+    int point = 0;
+  	int subsum = 0;
+  	int sum;
+    REPP(i,x,30){
+
+        if(x != i) subsum += v[i][y];
+
+        if(subsum > B[2]) break;
+      	sum = subsum;
+
+        for(int j = x; j >= 0; --j){
+        	sum += v[j][y];
+        	if(sum == B[0]) point += B[0];
+        	if(sum == B[1]) point += B[1];
+        	if(sum == B[2]) point += B[2];
+        	if(sum > B[2]) break;
+        }
+    }
+  	subsum = 0;
+
+    REPP(i,y,30){
+        if(i != y) subsum += v[x][i];
+
+        sum = subsum;
+        if(subsum > B[2]) break;
+
+        for(int j = y; j >= 0; --j){
+        	sum += v[x][j];
+        	if(sum == B[0]) point += B[0];
+        	if(sum == B[1]) point += B[1];
+        	if(sum == B[2]) point += B[2];
+        	if(sum > B[2]) break;
+        }
+    }
+
+    return point;
+}
+
+bool Timer(){
+    if(clock() >= 2999000) return 1;
+  	else return 0;
+}
+
+int main() {
+    cin.tie(0);    
+	  ios::sync_with_stdio(false);
+    int tmp;
+    bool stopflag = 0;
+    cin >> tmp >> B[0] >> B[1] >> B[2];
+    vector<vector<int>> minv(N,vector<int>(N)), maxv(N,vector<int>(N)), range(N,vector<int>(N)),ans(N,vector<int>(N));
+    REP(i,N) REP(j,N){ cin >> minv[i][j];}
+    REP(i,N) REP(j,N){ cin >> maxv[i][j]; ans[i][j] = minv[i][j];range[i][j] = maxv[i][j] - minv[i][j] + 1;}
+    int now = calc(ans);
+    int diff,orig,befo,afte,rannum,x,y,p = 600;
+
+    REP(t,INF){
+        rannum = ran(900);
+        x = rannum / 30; y = rannum % 30;
+        if(range[x][y] == 1) continue;
+        befo = portcalc(x,y,ans);
+        if(befo > p){ continue;}
+
+        orig = ans[x][y];
+        while(ans[x][y] == orig) ans[x][y] = minv[x][y] + ran(range[x][y]);
+        afte = portcalc(x,y,ans);
+
+        afte -= befo;
+      	diff = afte;
+      	diff += ran(200);
+      	diff -= 72;
+      	diff -= t/75000;
+        if(diff < 0) ans[x][y] = orig;
+        else now += afte;
+
+        if(t >= 5850000) if(Timer()){break;}
+    }
+
+    REP(i,N){
+        REP(j,N){
+            cout << ans[i][j] << ' ';
+        }
+        cout << endl;
+    }
+}
