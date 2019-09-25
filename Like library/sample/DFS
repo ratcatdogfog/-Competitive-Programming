@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define REP(i,n) for(long long i=0;i<n;++i)
+constexpr int INF = 2147483647;
+
+void ATC002(){
+    int H,W,sy,sx,gy,gx;
+    cin >> H >> W >> sy >> sx >> gy >> gx;
+    bool used[H][W] ={};
+    vector<vector<char>> c(H,vector<char>(W));
+    int dp[H][W];
+	  --sy;--sx;--gy;--gx;
+    REP(i,H) REP(j,W){cin >> c[i][j];dp[i][j] = INF;}
+	  dp[sy][sx] = 0;
+    queue<pair<int,int>> que;
+    que.push(make_pair(sy,sx));
+    while(!que.empty()){
+        int y,x;
+        tie(y,x) = que.front();que.pop();
+        REP(i,4){
+            int ny = y + (i - 1) % 2;
+            int nx = x + (i - 2) % 2;
+            if(ny < 0 || H <= ny || nx < 0 || W <= nx || c[ny][nx] == '#') continue;
+            if(used[ny][nx] == 1) continue;
+            used[ny][nx] = 1;
+            dp[ny][nx] = min(dp[ny][nx],dp[y][x]+1);
+            que.push(make_pair(ny,nx));
+        }
+    }
+    cout << dp[gy][gx] << endl;
+}
+
+/*
+  verified : https://atcoder.jp/contests/atc002/tasks/abc007_3
+*/
+
+int main(){
+    ATC002();
+    return 0;
+}
