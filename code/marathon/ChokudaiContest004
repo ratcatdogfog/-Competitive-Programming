@@ -1,6 +1,7 @@
 /*
   verified : https://atcoder.jp/contests/chokudai004
   submission : https://atcoder.jp/contests/chokudai004/submissions/7366296
+  points : 1597136
 */
 
 #include <bits/stdc++.h>
@@ -95,8 +96,8 @@ bool Timer(){
 }
 
 int main() {
-    cin.tie(0);    
-	  ios::sync_with_stdio(false);
+    cin.tie(0);
+    ios::sync_with_stdio(false);
     int tmp;
     bool stopflag = 0;
     cin >> tmp >> B[0] >> B[1] >> B[2];
