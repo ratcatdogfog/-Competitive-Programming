@@ -1,0 +1,50 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+/*
+hugaより小さい要素の個数を返す
+lower_bound(hoge.begin(),hoge().end(),huga) - hoge.begin();
+
+huga以上の要素の個数を返す
+huga.end() - lower_bound(hoge.begin(),hoge().end(),huga);
+
+huga以下の要素の個数を返す
+upper_bound(hoge.begin(),hoge().end(),huga) - hoge.begin();
+
+hugaより大きい要素の個数を返す
+huga.end() - upper_bound(hoge.begin(),hoge().end(),huga);
+
+特定の要素の個数を返す
+//まず要素が存在するか確認する
+if(binary_search(hoge.begin(),hoge.end(),huga)){
+    //huga以下の要素数とhugaより小さい要素数の差
+    int A = upper_bound(hoge.begin(),hoge().end(),huga) - hoge.begin();
+    int B = lower_bound(hoge.begin(),hoge().end(),huga) - hoge.begin();
+    int ans = B - A;
+}
+
+特定の区間に要素が存在するかどうか
+hogeには区間の始点を足す、hugaには区間の始点と要素数を足す、keyは調べたい要素
+if(binary_search(hoge.begin() + hoge,hoge.begin() + hoge + huga,key));
+*/
+
+void ABC142D(){
+    int N;
+    cin >> N;
+    vector<int> L(N);
+    REP(i,N) cin >> L[i];
+    sort ALL(L);
+    int ans = 0;
+    for(int i = 0 ; i < N ; ++i){
+        for(int j = i+1; j < N;++j){
+            int k = lower_bound(L.begin(),L.end(),L[i] + L[j]) - L.begin();
+            ans += max(k - (j+1),0);
+        }
+    }
+    cout << ans << endl;
+}
+
+signed main(){
+    ABC142D();
+    return 0;
+}
