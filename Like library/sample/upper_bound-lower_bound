@@ -44,6 +44,11 @@ void ABC142D(){
     cout << ans << endl;
 }
 
+/*
+  verified : https://atcoder.jp/contests/abc143/tasks/abc143_d
+*/
+
+
 signed main(){
     ABC142D();
     return 0;
