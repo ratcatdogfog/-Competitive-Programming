@@ -13,7 +13,7 @@ struct UnionFind{
     }
 
     bool same(int x,int y){//つながっているかどうか判定
-        return par[x] == par[y];
+        return root(x) == root(y);
     }
 
     int size(int x){ //根の大きさを判定する
